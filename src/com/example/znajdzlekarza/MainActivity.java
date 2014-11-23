@@ -1,11 +1,7 @@
 package com.example.znajdzlekarza;
 
 
-import java.util.Date;
-
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -23,25 +19,7 @@ public class MainActivity extends ActionBarActivity {
     private TextView tvDistance;
  
     private LocationManager locationManager;
-    private Location savedLocation = null;
     
-    private LocationListener locationListener = new LocationListener() {
-    	
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
- 
-        public void onProviderEnabled(String provider) {}
- 
-        public void onProviderDisabled(String provider) {}
- 
-        public void onLocationChanged(Location location) {
-        	
-            showLocation(location);
-            showAdditionalInfo(location);
-            showDistance(location);
-            if (savedLocation == null)
-                savedLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-    };
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,85 +30,44 @@ public class MainActivity extends ActionBarActivity {
         tvInformations = (TextView) findViewById(R.id.tvInformations);
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         
+        String strProvider = "GPS information: ";
+        tvProvider.setText(strProvider);
         tvLatitude.setText("Latitude: ");
         tvLongitude.setText("Longitude: ");
         tvInformations.setText("AdditionalInfo: ");
         tvDistance.setText("Distance to Jan Pawel II hospital: ");
         
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            tvProvider.setText("GPS");
-        else
-            tvProvider.setText("GPS Disabled. Please, turn it on");
-     
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        	strProvider += "GPS Enabled";
+            tvProvider.setText(strProvider);
+        }
+        else{
+        	strProvider += "GPS Disabled. Please, turn it on";
+            tvProvider.setText(strProvider);
+        }
        
     }
  
-    private void showDistance(Location locationA) {
-    	
-	    if (locationA != null) {
-	    	String stringDistance = "Distance to Jan Pawel II hospital: ";
-	        double latA=locationA.getLatitude();
-	        double lngA=locationA.getLongitude();
-	        
-	        locationA.setLatitude(latA);
-	        locationA.setLongitude(lngA);
-	
-	        Location locationB = new Location("point B");
-	
-	        locationB.setLatitude(50.090863);
-	        locationB.setLongitude(19.938296);
-	
-	        float distance = locationA.distanceTo(locationB);
-	        
-	        stringDistance += distance;
-	        tvDistance.setText(stringDistance);
-        }
-  
-    }
-    
+
     @Override
     protected void onStart() {
         super.onStart();
+        MyLocation mylocation=new MyLocation(tvLongitude,tvLatitude,tvInformations,tvDistance,locationManager);
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-                1000, 1, locationListener);
+                1000, 1, mylocation.locationListener);
     }
  
     @Override
     protected void onStop() {
-        locationManager.removeUpdates(locationListener);
+        MyLocation mylocation=new MyLocation(tvLongitude,tvLatitude,tvInformations,tvDistance,locationManager);
+        locationManager.removeUpdates(mylocation.locationListener);
         super.onStop();
     }
             
-    private void showLocation(Location location) {
-        String latitude = "Latitude: ";
-        String longitude = "Longitude: ";
-        if (location != null) {
-            latitude += location.getLatitude();
-            longitude += location.getLongitude();
-            tvLatitude.setText(latitude);
-            tvLongitude.setText(longitude);
-        }
-    }
-     
-    private void showAdditionalInfo(Location location) {
-        String infos = "Distance from first fix: ";
-        if (savedLocation == null || location == null) {
-            infos += "can't calculate";
-        } else {
-            infos += savedLocation.distanceTo(location) + "m\n";
-            infos += "Accuracy: ";
-            infos += location.getAccuracy() + "m \n";
-            infos += "Last fix: ";
-            infos += new Date(location.getTime()).toGMTString() + "\n";
-            infos += "Speed: ";
-            infos += location.getSpeed() + "m/s";
-        }
-        tvInformations.setText(infos);
-    }
 
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
