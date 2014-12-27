@@ -1,72 +1,90 @@
 package com.example.znajdzlekarza;
 
+import java.io.IOException;
+import java.util.ArrayList;
 
-import android.content.Context;
-import android.location.LocationManager;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
 
 public class MainActivity extends ActionBarActivity {
 	
-    private TextView tvProvider;
-    private TextView tvLongitude;
-    private TextView tvLatitude;
-    private TextView tvInformations;
-    private TextView tvDistance;
- 
-    private LocationManager locationManager;
-    
+
+	private Button btClinic;
+	private Button btDoctor;
+    private ListView list ; 
+    private ArrayAdapter<String> adapter ;  
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvProvider = (TextView) findViewById(R.id.tvProvider);
-        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
-        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
-        tvInformations = (TextView) findViewById(R.id.tvInformations);
-        tvDistance = (TextView) findViewById(R.id.tvDistance);
         
-        String strProvider = "GPS information: ";
-        tvProvider.setText(strProvider);
-        tvLatitude.setText("Latitude: ");
-        tvLongitude.setText("Longitude: ");
-        tvInformations.setText("AdditionalInfo: ");
-        tvDistance.setText("Distance to Jan Pawel II hospital: ");
+        btClinic=(Button) findViewById(R.id.btClinic);
+        btDoctor=(Button) findViewById(R.id.btDoctor);
         
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-        	strProvider += "GPS Enabled";
-            tvProvider.setText(strProvider);
+        btClinic.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View v1) {
+    			Intent nextScreen1 = new Intent(MainActivity.this, FindClinicActivity.class);
+    			startActivity(nextScreen1);
+    		}
+    	});
+        
+        btDoctor.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View v1) {
+    			Intent nextScreen1 = new Intent(MainActivity.this, FindDoctorActivity.class);
+    			startActivity(nextScreen1);
+    		}
+    	});
+        
+        list = (ListView) findViewById(R.id.listView1);
+        
+        DataBaseHelper myDbHelper = new DataBaseHelper(this);
+        
+        try {
+        	 
+        	myDbHelper.createDataBase();
+        	 
+        	} catch (IOException ioe) {
+        	 
+        	throw new Error("Unable to create database");
+        	 
+        	}
+        	 
+        try {
+        	 
+        	myDbHelper.openDataBase();
+        	 
+        	}catch(SQLException sqle){
+        	 
+        	throw sqle;
+        	 
+        	}
+        
+        ArrayList<String> specializationsL = new ArrayList<String>();
+        
+        Cursor k = myDbHelper.getSpecializations();
+        while(k.moveToNext()){
+        	String specialization=k.getString(0);
+        	specializationsL.add(specialization);
         }
-        else{
-        	strProvider += "GPS Disabled. Please, turn it on";
-            tvProvider.setText(strProvider);
-        }
-       
-    }
- 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        MyLocation mylocation=new MyLocation(tvLongitude,tvLatitude,tvInformations,tvDistance,locationManager);
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                1000, 1, mylocation.locationListener);
+        myDbHelper.close();
+        
+        //adapter = new ArrayAdapter<String>(this, R.layout.row, carL);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,specializationsL);
+        list.setAdapter(adapter);
+        
     }
- 
-    @Override
-    protected void onStop() {
-        MyLocation mylocation=new MyLocation(tvLongitude,tvLatitude,tvInformations,tvDistance,locationManager);
-        locationManager.removeUpdates(mylocation.locationListener);
-        super.onStop();
-    }
-            
-
+         
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,4 +104,5 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
 }

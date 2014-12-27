@@ -1,7 +1,5 @@
 package com.example.znajdzlekarza;
 
-import java.util.Date;
-
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -43,8 +41,8 @@ public class MyLocation {
             showAdditionalInfo(location);
             
             Distance distance=new Distance(tvDistance);
+            distance.shortestDistanceToClinic(location);
             
-            distance.showDistance(location);
             if (savedLocation == null)
                 savedLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
@@ -52,8 +50,8 @@ public class MyLocation {
     
 
     private void showLocation(Location location) {
-        String latitude = "Latitude: ";
-        String longitude = "Longitude: ";
+        String latitude = "Szerokoœæ geo: ";
+        String longitude = "D³ugoœæ geo: ";
         if (location != null) {
             latitude += location.getLatitude();
             longitude += location.getLongitude();
@@ -63,16 +61,14 @@ public class MyLocation {
     }
      
     private void showAdditionalInfo(Location location) {
-        String infos = "Distance from first fix: ";
+        String infos = "Odleg³oœæ od pierwszego fix'a: ";
         if (savedLocation == null || location == null) {
-            infos += "can't calculate";
+            infos += "nie mo¿na obliczyæ";
         } else {
             infos += savedLocation.distanceTo(location) + "m\n";
-            infos += "Accuracy: ";
+            infos += "Dok³adnoœæ: ";
             infos += location.getAccuracy() + "m \n";
-            infos += "Last fix: ";
-            infos += new Date(location.getTime()).toGMTString() + "\n";
-            infos += "Speed: ";
+            infos += "Prêdkoœæ: ";
             infos += location.getSpeed() + "m/s";
         }
         tvInformations.setText(infos);
