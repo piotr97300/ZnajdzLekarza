@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,7 +24,10 @@ public class MainActivity extends ActionBarActivity {
 	private Button btClinic;
 	private Button btDoctor;
     private ListView list ; 
-    private ArrayAdapter<String> adapter ;  
+    private ArrayAdapter<String> adapter ;
+	public static int currentSpecializationId;
+	public static boolean currentFindClinicActivity = false; 
+	public static boolean currentFindDoctorActivity = false; 
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,8 @@ public class MainActivity extends ActionBarActivity {
         
         btClinic.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v1) {
+    			currentFindClinicActivity = true;
+    			currentFindDoctorActivity = false;
     			Intent nextScreen1 = new Intent(MainActivity.this, FindClinicActivity.class);
     			startActivity(nextScreen1);
     		}
@@ -40,6 +47,8 @@ public class MainActivity extends ActionBarActivity {
         
         btDoctor.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v1) {
+    			currentFindDoctorActivity = true;
+    			currentFindClinicActivity = false;
     			Intent nextScreen1 = new Intent(MainActivity.this, FindDoctorActivity.class);
     			startActivity(nextScreen1);
     		}
@@ -48,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
         list = (ListView) findViewById(R.id.listView1);
         
         DataBaseHelper myDbHelper = new DataBaseHelper(this);
-        
+
         try {
         	 
         	myDbHelper.createDataBase();
@@ -58,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
         	throw new Error("Unable to create database");
         	 
         	}
-        	 
+        
         try {
         	 
         	myDbHelper.openDataBase();
@@ -79,10 +88,20 @@ public class MainActivity extends ActionBarActivity {
 
         myDbHelper.close();
         
-        //adapter = new ArrayAdapter<String>(this, R.layout.row, carL);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,specializationsL);
         list.setAdapter(adapter);
         
+        OnItemClickListener itemClickListener = new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+  
+              	MainActivity.currentSpecializationId=position;
+              	
+             }
+        };
+            
+        list.setOnItemClickListener(itemClickListener);
+           
     }
          
 

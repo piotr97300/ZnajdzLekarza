@@ -12,13 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class FindDoctorActivity extends ActionBarActivity {
-	//TODO 2
-	//Na razie jest to przekopiowana klasa FindClinicActivity
-	//Trzeba ja przerobic aby po wybraniu lekarza wyswietlal 
-	//najkrotszy dystans do szpitala ,w ktorym przyjmuje
-	//W zwiazku z tym, ze bedzie troche inne zapytanie sql 
-	//i inny tekst do wyswietlenia to najlepiej stworzyc
-	// w Distance oddzielna metode
+
     private TextView tvProvider;
     private TextView tvLongitude;
     private TextView tvLatitude;
@@ -45,10 +39,11 @@ public class FindDoctorActivity extends ActionBarActivity {
         tvLatitude.setText("Szerokoœæ geo:");
         tvLongitude.setText("D³ugoœæ geo: ");
         tvInformations.setText("Dodatkowe info: ");
-        tvDistance.setText("Odleg³oœæ do najbli¿szego szpitala: ");
+        tvDistance.setText("Odleg³oœæ do najbli¿szego lekarza: ");
 
         btBack.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v1) {
+    			MainActivity.currentFindDoctorActivity = false;
     			Intent nextScreen1 = new Intent(FindDoctorActivity.this, MainActivity.class);
     			startActivity(nextScreen1);
     		}

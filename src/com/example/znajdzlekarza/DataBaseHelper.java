@@ -17,7 +17,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     
 //The Android's default system path of your application database.
 	private static String DB_PATH = "/data/data/"+ MyApplication.getAppContext().getApplicationInfo().packageName + "/databases/";
-	//com.example.znajdzlekarza
+	
 	private static String DB_NAME = "FindADoctor";
 	 
 	private SQLiteDatabase myDataBase;
@@ -149,26 +149,32 @@ public class DataBaseHelper extends SQLiteOpenHelper{
  
 	}
 	
+	
+	public Cursor getDoctor(int id) {
+		SQLiteDatabase db = getReadableDatabase();	
+		Cursor kursor = db.rawQuery("SELECT c.name, c.latitude, c.longitude, d.name, d.surname ,s.name FROM clinics c, doctors d, specializations s WHERE s._id=?  AND s._id=d.spec_id AND c._id=d.clinic_id", new String [] {String.valueOf(id+1)});
+		return kursor;
+	}
+	
+	
 	public Cursor getSpecializations() {
-		String[] kolumny={"name"};
-		this.close();
+		String[] kolumny={"name"};	
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor kursor= db.query("specializations",kolumny,null,null,null,null,null);
 		return kursor;
 	}
 	
 	public Cursor getCoordinates() {
-		String[] kolumny={"latitude","longitude"};
+		String[] kolumny={"latitude","longitude","name"};
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor kursor= db.query("clinics",kolumny,null,null,null,null,null);
 		return kursor;
-		//TODO 1
-		//Jesli chcemy miec tez nazwe szpitala to trzeba ja tu pobrac z bazy
 	}
-	
+
+
 	
 // Add your public helper methods to access and get content from the database.
 // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
 // to you to create adapters for your views.
- 
-}
+	
+} 

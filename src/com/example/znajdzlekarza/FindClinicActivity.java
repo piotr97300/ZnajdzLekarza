@@ -43,6 +43,7 @@ public class FindClinicActivity extends ActionBarActivity {
         
         btBack.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v1) {
+    			MainActivity.currentFindClinicActivity = false;
     			Intent nextScreen1 = new Intent(FindClinicActivity.this, MainActivity.class);
     			startActivity(nextScreen1);
     		}

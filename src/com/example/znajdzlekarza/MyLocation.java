@@ -40,8 +40,15 @@ public class MyLocation {
             showLocation(location);
             showAdditionalInfo(location);
             
-            Distance distance=new Distance(tvDistance);
-            distance.shortestDistanceToClinic(location);
+            if (MainActivity.currentFindClinicActivity == true) {
+	            Distance distance=new Distance(tvDistance);
+	            distance.shortestDistanceToClinic(location);
+            }    
+	        
+            if (MainActivity.currentFindDoctorActivity == true) {
+	            Distance distance2=new Distance(tvDistance);
+	            distance2.shortestDistanceToDoctor(location);
+            }
             
             if (savedLocation == null)
                 savedLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -74,5 +81,4 @@ public class MyLocation {
         tvInformations.setText(infos);
     }
     
-
 }
