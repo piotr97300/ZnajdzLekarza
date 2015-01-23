@@ -12,6 +12,11 @@ import android.widget.TextView;
 public class Distance{
 	
 	private final TextView tvDistance;
+	public static float latitudeWithMinDistanceToClinic;
+	public static float longitudeWithMinDistanceToClinic;
+	
+	public static float latitudeWithMinDistanceToDoctor;
+	public static float longitudeWithMinDistanceToDoctor;
 	
     public Distance(TextView tvDistance) {
 		super();
@@ -48,6 +53,8 @@ public class Distance{
 		        if(distance<minDistance){
 		        	minDistance = distance;
 		        	nameWithMinDistance = k.getString(k.getColumnIndex("name"));
+		        	latitudeWithMinDistanceToClinic = k.getFloat(0);
+		            longitudeWithMinDistanceToClinic = 	k.getFloat(1);	
 		        }
 	        	
 	        }
@@ -98,6 +105,8 @@ public class Distance{
 		        	doctorTypeWithMinDistance = k.getString(5);
 		        	doctorNameWithMinDistance = k.getString(3);
 		        	doctorSurnameWithMinDistance = k.getString(4);
+		        	latitudeWithMinDistanceToDoctor = k.getFloat(1);
+		        	longitudeWithMinDistanceToDoctor = k.getFloat(2);
 		        }
 	       	
 	        }

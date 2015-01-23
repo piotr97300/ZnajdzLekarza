@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -27,7 +28,8 @@ public class MainActivity extends ActionBarActivity {
     private ArrayAdapter<String> adapter ;
 	public static int currentSpecializationId;
 	public static boolean currentFindClinicActivity = false; 
-	public static boolean currentFindDoctorActivity = false; 
+	public static boolean currentFindDoctorActivity = false;
+	private int backButtonCount = 0;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,5 +125,22 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    @Override
+	public void onBackPressed()
+	{
+	    if(backButtonCount >= 1)
+	    {
+	        Intent intent = new Intent(Intent.ACTION_MAIN);
+	        intent.addCategory(Intent.CATEGORY_HOME);
+	        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        startActivity(intent);
+	    }
+	    else
+	    {
+	        Toast.makeText(this, "Wciœnij przycisk cofania ponownie by zamkn¹æ aplikacjê.", Toast.LENGTH_SHORT).show();
+	        backButtonCount++;
+	    }
+	}
     
 }

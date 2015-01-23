@@ -3,6 +3,7 @@ package com.example.znajdzlekarza;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -18,6 +19,7 @@ public class FindDoctorActivity extends ActionBarActivity {
     private TextView tvLatitude;
     private TextView tvInformations;
     private TextView tvDistance;
+    private Button btNavigate;
     
     private Button btBack;
  
@@ -33,6 +35,7 @@ public class FindDoctorActivity extends ActionBarActivity {
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         
         btBack = (Button) findViewById(R.id.btBack);
+        btNavigate = (Button) findViewById(R.id.btNavigate);
         
         String strProvider = "Informacje o GPS: ";
         tvProvider.setText(strProvider);
@@ -46,6 +49,15 @@ public class FindDoctorActivity extends ActionBarActivity {
     			MainActivity.currentFindDoctorActivity = false;
     			Intent nextScreen1 = new Intent(FindDoctorActivity.this, MainActivity.class);
     			startActivity(nextScreen1);
+    		}
+    	});
+        
+        btNavigate.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View v2) {
+    			MainActivity.currentFindClinicActivity = false;
+    			Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+    		    Uri.parse("google.navigation:q="+Distance.latitudeWithMinDistanceToDoctor+","+Distance.longitudeWithMinDistanceToDoctor));
+    			startActivity(intent);
     		}
     	});
         

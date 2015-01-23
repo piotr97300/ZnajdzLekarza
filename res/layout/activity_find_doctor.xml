@@ -2,65 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background = "@color/background_color"
     tools:context="com.example.znajdzlekarza.FindDoctorActivity" >
-
-    <TextView
-        android:id="@+id/tvLatitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvProvider"
-        android:layout_below="@+id/tvProvider"
-        android:text="Szerokość geo: "
-        android:textColor="@color/text_color"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/tvLongitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvLatitude"
-        android:layout_below="@+id/tvLatitude"
-        android:text="Długość geo: "
-        android:textColor="@color/text_color"
-        android:textSize="15sp"  />
-
-    <TextView
-        android:id="@+id/tvInformations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvLongitude"
-        android:layout_below="@+id/tvLongitude"
-        android:text="Dodatkowe info: "
-        android:textColor="@color/text_color"
-        android:textSize="15sp"  />
-
-    <TextView
-        android:id="@+id/tvDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvInformations"
-        android:layout_below="@+id/tvInformations"
-        android:layout_marginTop="15dp"
-        android:text="Odległość do najbliższego szpitala: "
-        android:textColor="@color/text_color"
-        android:textSize="18sp"  />
-
-    <TextView
-        android:id="@+id/tvProvider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="37dp"
-        android:text="Informacje o GPS: "
-        android:textColor="@color/text_color"
-        android:textSize="15sp" />
     
     <Button
         android:id="@+id/btBack"
@@ -72,5 +19,66 @@
         android:background = "@color/button_color"
         android:textColor= "@color/button_text_color"
         android:text="Powrót" />
+    
+    <Button
+        android:id="@+id/btNavigate"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_above="@+id/btBack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:background="@color/button_color"
+        android:text="Nawiguj"
+        android:textColor="@color/button_text_color" />
+    <TextView 
+        android:id="@+id/tvProvider" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_alignLeft="@+id/btBack" 
+        android:layout_alignParentTop="true" 
+        android:layout_marginLeft="15dp" 
+        android:layout_marginTop="15dp" 
+        android:text="Informacje o GPS: " 
+        android:textColor="@color/text_color" 
+        android:textSize="15sp"/>
+    <TextView 
+        android:id="@+id/tvLatitude" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_alignLeft="@+id/btBack" 
+        android:layout_below="@+id/tvProvider" 
+        android:layout_marginLeft="15dp" 
+        android:text="Szerokość geo: " 
+        android:textColor="@color/text_color" 
+        android:textSize="15sp"/>
+    <TextView 
+        android:id="@+id/tvLongitude" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_alignLeft="@+id/btBack" 
+        android:layout_below="@+id/tvLatitude" 
+        android:layout_marginLeft="15dp" 
+        android:text="Długość geo: " 
+        android:textColor="@color/text_color" 
+        android:textSize="15sp"/>
+    <TextView 
+        android:id="@+id/tvInformations" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_alignLeft="@+id/btBack" 
+        android:layout_below="@+id/tvLongitude" 
+        android:layout_marginLeft="15dp" 
+        android:text="Dodatkowe info: " 
+        android:textColor="@color/text_color" 
+        android:textSize="15sp"/>
+    <TextView android:id="@+id/tvDistance" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_alignLeft="@+id/btBack" 
+        android:layout_below="@+id/tvInformations" 
+        android:layout_marginLeft="15dp" 
+        android:text="Odległość do najbliższego szpitala: " 
+        android:textColor="@color/text_color" 
+        android:textSize="18sp"/>
 
 </RelativeLayout>

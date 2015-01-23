@@ -1661,7 +1661,8 @@ containing a value of this type.
         public static final int bottom=0x7f09001e;
         public static final int btBack=0x7f090046;
         public static final int btClinic=0x7f09004a;
-        public static final int btDoctor=0x7f090047;
+        public static final int btDoctor=0x7f090049;
+        public static final int btNavigate=0x7f090047;
         public static final int checkbox=0x7f09002b;
         public static final int collapseActionView=0x7f090015;
         public static final int decor_content_parent=0x7f090031;
@@ -1678,7 +1679,6 @@ containing a value of this type.
         public static final int icon=0x7f090028;
         public static final int ifRoom=0x7f090016;
         public static final int image=0x7f090025;
-        public static final int imageView1=0x7f090049;
         public static final int listMode=0x7f09000a;
         public static final int listView1=0x7f090048;
         public static final int list_item=0x7f090027;

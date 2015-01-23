@@ -73,4 +73,15 @@
         android:textColor= "@color/button_text_color"
         android:text="Powrót" />
 
+    <Button
+        android:id="@+id/btNavigate"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_above="@+id/btBack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:background="@color/button_color"
+        android:text="Nawiguj"
+        android:textColor="@color/button_text_color" />
+
 </RelativeLayout>
